@@ -37,6 +37,8 @@ function generate(){
     $("#r_results").append("curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);\n");
     $("#r_results").append("curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 0);\n");
     $("#r_results").append("curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 0);\n");
+    $("#r_results").append("curl_setopt($ch, CURLOPT_COOKIEFILE, getcwd().'/cookie.txt');\n");
+    $("#r_results").append("curl_setopt($ch, CURLOPT_COOKIEJAR, getcwd().'/cookie.txt');\n");
     if (r_formdata.length != 0) {
         $("#r_results").append("curl_setopt($ch, CURLOPT_POSTFIELDS, '"+ r_formdata +"');\n");
     }
