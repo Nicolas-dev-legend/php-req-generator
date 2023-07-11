@@ -28,11 +28,42 @@ function generate(){
         $("#r_results").append("curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'GET');\n");
     }
     $("#r_results").append("$headers = array();\n");
-    var r_header = r_headers.split("\n");
-    r_header.forEach(function(value, index) {
-        $("#r_results").append("$headers[] = '"+value+"';\n");
-    });
-    $("#r_results").append("curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);\n");
+   var r_headers = $("#r_headers").val();
+
+// Split the headers by line breaks
+var headersArray = r_headers.split("\n");
+
+// Initialize an empty array to store the formatted headers
+var formattedHeaders = [];
+
+// Iterate over each header line
+headersArray.forEach(function (line) {
+  // Remove leading and trailing whitespace from the line
+  var trimmedLine = line.trim();
+
+  // Split the line into header and value using the first occurrence of ":"
+  var separatorIndex = trimmedLine.indexOf(":");
+  if (separatorIndex !== -1) {
+    var header = trimmedLine.substring(0, separatorIndex).trim();
+    var value = trimmedLine.substring(separatorIndex + 1).trim();
+
+    // Format the header and value into a string
+    var formattedHeader = header + ": " + value;
+
+    // Add the formatted header to the array
+    formattedHeaders.push(formattedHeader);
+  }
+});
+
+// Join the formatted headers using "\n" to create the headers string
+var headersString = formattedHeaders.join("\n");
+
+// ...
+
+// Append the headers to the generated cURL request code
+$("#r_results").append("curl_setopt($ch, CURLOPT_HTTPHEADER, array(\n");
+$("#r_results").append(headersString + "\n");
+$("#r_results").append("));\n");
     $("#r_results").append("curl_setopt($ch, CURLOPT_FOLLOWLOCATION, 1);\n");
     $("#r_results").append("curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);\n");
     $("#r_results").append("curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 0);\n");
