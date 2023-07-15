@@ -58,7 +58,7 @@ function generate(){
 
   // Append the headers to the generated PHP code
   $("#r_results").append(headersString + "\n");
-
+$("#r_results").append("curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);\n");
     $("#r_results").append("curl_setopt($ch, CURLOPT_FOLLOWLOCATION, 1);\n");
     $("#r_results").append("curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);\n");
     $("#r_results").append("curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 0);\n");
